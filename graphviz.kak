@@ -39,7 +39,7 @@ add-highlighter shared/graphviz/doubleq region '"' '"' fill value
 
 evaluate-commands %sh{
     # Grammar
-    keywords="graph|digraph"
+    keywords="graph|digraph|rankdir|label|color|fillcolor|penwidth|weight|subgraph|splines|rank"
 
     # Add the language's grammar to the static completion list
     printf %s\\n "declare-option str-list graphviz_static_words ${keywords}" | tr '|' ' '
