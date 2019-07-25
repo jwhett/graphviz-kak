@@ -31,15 +31,20 @@ provide-module graphviz %{
 add-highlighter shared/graphviz regions
 
 add-highlighter shared/graphviz/content default-region group
+
 add-highlighter shared/graphviz/preproc region '#' '$' fill comment
 add-highlighter shared/graphviz/comment region '//' '$' fill comment
-add-highlighter shared/graphviz/comment-block region '/\*' '\*/' fill value
-add-highlighter shared/graphviz/singleq region "'" "'" fill value
-add-highlighter shared/graphviz/doubleq region '"' '"' fill value
+add-highlighter shared/graphviz/comment-block region '/\*' '\*/' fill comment
+
+add-highlighter shared/graphviz/singleq region "'" "'" fill string
+add-highlighter shared/graphviz/doubleq region '"' '"' fill string
+
+add-highlighter shared/graphviz/content/ regex \b([a-zA-Z0-9]+)= 1:rgb:87ceeb+i
+add-highlighter shared/graphviz/content/ regex "(->|--)" 0:magenta+b
 
 evaluate-commands %sh{
     # Grammar
-    keywords="graph|digraph|rankdir|label|color|fillcolor|penwidth|weight|subgraph|splines|rank"
+    keywords="graph|digraph|rankdir|subgraph|splines"
 
     # Add the language's grammar to the static completion list
     printf %s\\n "declare-option str-list graphviz_static_words ${keywords}" | tr '|' ' '
@@ -47,5 +52,4 @@ evaluate-commands %sh{
     # Highlight keywords
     printf %s "add-highlighter shared/graphviz/content/ regex \b(${keywords})\b 0:keyword"
 }
-echo -d %opt{graphviz_static_words}
 }
